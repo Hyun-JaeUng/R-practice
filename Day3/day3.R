@@ -7,16 +7,16 @@ num
 
 num1 <- 11 # c(11)
 num2 <- 3  # c(3)
-num1 / num2    # 나눗셈
-num1 %% num2   # 나머지 값
-num1 %/% num2  # 몫
+num1 / num2 # 나눗셈
+num1 %% num2 # 나머지 값
+num1 %/% num2 # 몫
 
 
 #LIST
 v<-c(1,2,3)
 l<-list(1,2,3) 
 v * 10
-l * 10  #Error in l * 10 : 이항연산자에 수치가 아닌 인수입니다
+# l * 10 # 오류: 리스트라는 데이터 셋은 벡터연산이 불가. 
 v
 l
 v[1] 
@@ -26,7 +26,7 @@ l[[1]]
 lds <- list(1,2,3) 
 lds
 lds+100
-unlist(lds)
+unlist(lds) # 리스트를 벡터로 변환
 unlist(lds)+100
 lds[1]
 lds[1]+10
@@ -36,7 +36,7 @@ names(lds) <- LETTERS[1:3]
 lds
 lds[[2]]
 lds[["B"]]
-lds$B
+lds$B #names list 일 때만 가능
 
 
 a<-list(
@@ -45,8 +45,8 @@ a<-list(
   c = pi,
   d = list(-1,-5)
 )
-a
-a[1]
+
+a[1] # 리스트형식으로 꺼내지기에 연산 불가
 a[[1]] # a[["a"]]
 a$a
 a[[1]][1]
@@ -56,7 +56,7 @@ a[[1]]+1
 a[[1]][2] <- 100
 new_a <- unlist(a[1])
 a[1]; new_a
-names(a) <- NULL
+names(a) <- NULL # 이름 없애는 방법. 
 names(new_a) <- NULL
 
 print(100)
@@ -68,38 +68,14 @@ v1 <- c("사과", "바나나", "포도")
 print(v1)
 print(v1, print.gap=10)
 cat(100)
-cat(100,200)
+cat(100,200) # 개행처리 안됨 -> 반복문에서 확인 가능.
 cat(100,200,"\n")
 cat("aaa", "bbb", "ccc", "ddd", "\n")
 cat(v1, "\n")
 cat(v1, sep="-", "\n")
 
-print(paste("R", "은 통계분석", "전용 언어입니다."))
-cat("R", "은 통계분석", "전용 언어입니다.", "\n")
-
-ls()
-length(ls())
-save(list=ls(),file="all.rda") # varience will save in "all.rda" of rexam
-rm(list=ls())
-ls()
-load("all.rda")
-ls()
-
-#read file data
-nums <- scan("data/sample_num.txt")
-word_ansi <- scan("data/sample_ansi.txt",what="")
-words_utf8 <- scan("data/sample_utf8.txt", what="",encoding="UTF-8")
-words_utf8_new <- scan("data/sample_utf8.txt", what="")
-lines_ansi <- readLines("data/sample_ansi.txt")
-lines_utf8 <- readLines("data/sample_utf8.txt",encoding="UTF-8")
-
-df2 <- read.table("data/product_click.log", stringsAsFactors = T)
-str(df2)
-head(df2)
-summary(df2$V2)
-
-
-
+print(paste("R", "은 통계분석", "전용 언어입니다.")) # 인용부호 같이 나감
+cat("R", "은 통계분석", "전용 언어입니다.", "\n") # 이럴 떄는 cat이 적합
 
 #제어문
 #if else
@@ -119,18 +95,8 @@ if(randomNum%%2 == 1){
 
 if(randomNum%%2 == 1){
   cat(randomNum,";홀수","\n")
-  cat("종료")
 }else{
   cat(randomNum,";짝수","\n")
-  cat("종료")
-}
-
-if(randomNum%%2 == 1){
-  cat(randomNum,";홀수")
-  cat("종료")
-}else{
-  cat(randomNum,";짝수")
-  cat("종료")
 }
 
 score <- sample(0:100, 1)  # 0~100 숫자 한 개를 무작위로 뽑아서
@@ -148,12 +114,12 @@ if (score >=90){
 
 #for문
 #for 실습
-for(data in month.name) 
+for(data in month.name) # R의 내장벡터: month.name
   print(data)
-for(data in month.name)print(data);print("hello")
-for(data in month.name){print(data);print("hello")}
+for(data in month.name)print(data);print("ㅋㅋ")
+for(data in month.name){print(data);print("ㅋㅋ")} # 중괄호로 묶어야 한 반복안에 같이 출력
 
-for(n in 1:5)
+for(n in 1:5) #n에 1~5 차례차례 대입 -> 5번 반복됨.
   cat("hello?","\n")
 
 for(i in 1:5){
@@ -182,18 +148,19 @@ for(i in 1:9){
   cat("\n")
   if(bb) #bb가 TRUE이면
     break
-}
+} # 구구단에 계산결과가 30보다 크면 break 2번 실행하게해서 빠져나옴. (bb 변수 이용)
 
-
+bb <- F
 for(i in 1:9){
   for(j in 1:9){
     if(i*j>30){
+      bb<-T
       break
     } 
     cat(i,"*",j,"=",i*j,"\t")
   }
   cat("\n")
-}
+} # bb없으니 한 단에서의 반복문만 break를 통해 빠져나옴. 위와의 차이 생각
 
 #while문
 i<-1
@@ -220,7 +187,7 @@ while (i<=10) {
   i<-i+1
 }
 
-#switch 문을 대신하는 함수
+#switch 문을 대신하는 함수 (독특)
 month <- sample(1:12,1)
 month <- paste(month,"월",sep="") # "3월"  "3 월"
 result <- switch(EXPR=month,
@@ -232,24 +199,27 @@ cat(month,"은 ",result,"입니다\n",sep="")
 
 num <- sample(1:10,1)
 num
-switch(EXPR = num,"A","B","C","D")
+switch(EXPR = num,"A","B","C","D") # 1,2,3,4일 때만 주어진 문자열이 출력. 
 
 for(num in 1:10){
-  cat(num,":",switch(EXPR = num,"A","B","C","D"),"\n")
+  cat(num,":",switch(EXPR = num,"A","B","C","D"),"\n") #numeric이면 무조건 1,2,3,4 ~~ 이 순서로 감.
 }
 
+# 다른값 지정하고 싶으면 character형으로 변환 
 for(num in 1:10){
   num <- as.character(num) 
   cat(num,":",switch(EXPR = num,
-                     "7"="A","8"="B","9"="C","10"="D","ㅋ"),"\n")
+                     "7"="A","8"="B","9"="C","10"="D","ㅋ"),"\n") # 그외의 모든경우 "ㅋ"
 }
 
 
+# print 와 cat의 차이 (개행)
 for(data in month.name) 
   print(data)
 
 for(data in month.name) 
   cat(data)
+
 
 sum <- 0
 for(i in 5:15){
@@ -272,7 +242,7 @@ for(i in 5:15){
 sum <-0
 for(i in 5:15){
   if(i%%10==0){
-    next;  #continue
+    next;  #continue (현재 반복처리만 넘어감)
   }
   sum <- sum + i
   print(paste(i,":",sum))
@@ -297,4 +267,3 @@ repeat {
   if(sumNumber > 20)
     break;
 }
-
