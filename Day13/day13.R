@@ -198,6 +198,7 @@ exam %>%
   group_by(class) %>%                # class별로 분리
   summarise(mean_math = mean(math))  # math 평균 산출
 
+# summarise 활용하여 원하는 값 구해서 df 만듬
 exam %>%
   group_by(class) %>%                   # class별로 분리
   summarise(mean_math = mean(math),     # math 평균
